@@ -31,6 +31,5 @@ public class WelcomeController {
         HelloApplication.getMainStage().setTitle("Sign up");
         HelloApplication.getMainStage().setScene(scene);
         HelloApplication.getMainStage().show();
-
     }
 }

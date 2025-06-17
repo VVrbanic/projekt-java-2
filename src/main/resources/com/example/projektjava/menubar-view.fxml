@@ -4,7 +4,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 
-<MenuBar xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuBarController">
+<MenuBar xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projektjava.controller.MenubarController">
   <menus>
     <Menu mnemonicParsing="false" text="Confilct">
       <items>
@@ -14,14 +14,15 @@
     </Menu>
     <Menu mnemonicParsing="false" text="Profil">
       <items>
-        <MenuItem mnemonicParsing="false" text="About/edit profile" />
-            <MenuItem mnemonicParsing="false" text="SignOut" />
+        <MenuItem mnemonicParsing="false" onAction="#gotToProfileAbout" text="About/edit profile" />
+            <MenuItem mnemonicParsing="false" onAction="#signOut" text="SignOut" />
       </items>
     </Menu>
     <Menu mnemonicParsing="false" text="Users">
       <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-        <MenuItem mnemonicParsing="false" text="Edit" />
+            <MenuItem mnemonicParsing="false" onAction="#newUser" text="New" />
+        <MenuItem mnemonicParsing="false" onAction="#editUser" text="Edit" />
+            <MenuItem mnemonicParsing="false" onAction="#searchUser" text="Search" />
       </items>
     </Menu>
       <Menu mnemonicParsing="false" text="Logs">

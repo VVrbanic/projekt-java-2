@@ -3,10 +3,12 @@ package com.example.projektjava.controller;
 import com.example.projektjava.AppConstants;
 import com.example.projektjava.HelloApplication;
 import com.example.projektjava.AlertScreen;
+import com.example.projektjava.UserSession;
 import com.example.projektjava.dataBase.DataBase;
 import com.example.projektjava.exceptions.DatabaseException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 
@@ -38,13 +40,25 @@ public non-sealed class SignUpController implements AlertScreen {
     public Button signUpButton;
     @FXML
     public Button returnToWelcomePageButton;
+    @FXML
+    private Node menuBar;
 
-    private DataBase dataBase;
+    UserSession session = UserSession.getInstance();
 
     public void initialize() {
         ToggleGroup role = new ToggleGroup();
         roleUser.setToggleGroup(role);
         roleAdmin.setToggleGroup(role);
+        if(session == null){
+            returnToWelcomePageButton.setVisible(true);
+            menuBar.setVisible(false);
+            menuBar.setManaged(false);
+        }else{
+            returnToWelcomePageButton.setVisible(false);
+            menuBar.setVisible(true);
+            menuBar.setManaged(true);
+        }
+
     }
 
     @FXML
@@ -77,12 +91,19 @@ public non-sealed class SignUpController implements AlertScreen {
 
                 stmt.executeUpdate();
 
-                AlertScreen.showAlert(Alert.AlertType.INFORMATION, "User registered successfully, please log in!");
-                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("welcome-view.fxml"));
-                Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
-                HelloApplication.getMainStage().setTitle("Welcome");
-                HelloApplication.getMainStage().setScene(scene);
-                HelloApplication.getMainStage().show();
+
+                if(session == null){
+                    AlertScreen.showAlert(Alert.AlertType.INFORMATION, "User registered successfully, please log in!");
+                    FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("welcome-view.fxml"));
+                    Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
+                    HelloApplication.getMainStage().setTitle("Welcome");
+                    HelloApplication.getMainStage().setScene(scene);
+                    HelloApplication.getMainStage().show();
+                }else{
+                    AlertScreen.showAlert(Alert.AlertType.INFORMATION, "User registered successfully");
+                    clearAll();
+                }
+
 
             } catch (SQLException ex) {
                 AlertScreen.showAlert(Alert.AlertType.ERROR, "Database error: " + ex.getMessage());

@@ -28,6 +28,7 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
+      <fx:include fx:id="menuBar" source="menubar-view.fxml" GridPane.columnSpan="2" GridPane.valignment="TOP" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets right="20.0" />

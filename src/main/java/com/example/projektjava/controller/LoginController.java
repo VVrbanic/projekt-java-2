@@ -3,6 +3,7 @@ package com.example.projektjava.controller;
 import com.example.projektjava.AppConstants;
 import com.example.projektjava.HelloApplication;
 import com.example.projektjava.AlertScreen;
+import com.example.projektjava.UserSession;
 import com.example.projektjava.dataBase.DataBase;
 import com.example.projektjava.exceptions.DatabaseException;
 import com.example.projektjava.exceptions.NoConnectionToDatabaseException;
@@ -44,12 +45,9 @@ public non-sealed class LoginController implements AlertScreen {
             Optional<User> user = DataBase.getUserIfExists(email.getText(), password.getText());
             if(user.isPresent()) {
                 logger.info("Login Successful");
+                UserSession.init(user.get());
                 FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("profile-about.fxml"));
-                Parent root = fxmlLoader.load();
-                ProfileAboutController controller = fxmlLoader.getController();
-                controller.setUser(user.get());
-
-                Scene scene = new Scene(root, 1000, 600);
+                Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
                 HelloApplication.getMainStage().setTitle("Welcome");
                 HelloApplication.getMainStage().setScene(scene);
                 HelloApplication.getMainStage().show();

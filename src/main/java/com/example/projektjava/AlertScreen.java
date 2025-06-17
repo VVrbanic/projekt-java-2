@@ -1,13 +1,13 @@
 package com.example.projektjava;
 
-import com.example.projektjava.controller.LoginController;
-import com.example.projektjava.controller.ProfileAboutController;
-import com.example.projektjava.controller.SignUpController;
+import com.example.projektjava.controller.*;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 import java.util.List;
+import java.util.Optional;
 
-public sealed interface AlertScreen permits LoginController, ProfileAboutController, SignUpController {
+public sealed interface AlertScreen permits LoginController, ProfileAboutController, SignUpController, UsersEditController, UsersSearchController {
     static void userExists() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("ERROR!");
@@ -52,5 +52,13 @@ public sealed interface AlertScreen permits LoginController, ProfileAboutControl
         var alert = new Alert(Alert.AlertType.ERROR, m);
         alert.setTitle("Greška pri unosu!");
         alert.show();
+    }
+
+    static boolean conformation(String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.filter(buttonType -> buttonType == ButtonType.OK).isPresent();
     }
 }

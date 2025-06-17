@@ -3,6 +3,7 @@ package com.example.projektjava.controller;
 import com.example.projektjava.AlertScreen;
 import com.example.projektjava.AppConstants;
 import com.example.projektjava.HelloApplication;
+import com.example.projektjava.UserSession;
 import com.example.projektjava.dataBase.DataBase;
 import com.example.projektjava.exceptions.DatabaseException;
 import com.example.projektjava.model.User;
@@ -36,8 +37,10 @@ public non-sealed class ProfileAboutController implements AlertScreen {
     @FXML
     public Button saveButton;
 
-    private String password;
+
     private Long id;
+
+    User currentUser = UserSession.getInstance().getUser();
 
     public void setUser(User user) {
         firstName.setText(user.getFirstName());
@@ -46,7 +49,6 @@ public non-sealed class ProfileAboutController implements AlertScreen {
         email.setText(user.getEmail());
         roleUser.setSelected(!user.isAdmin());
         roleAdmin.setSelected(user.isAdmin());
-        password  = user.getPassword();
         id = user.getId();
     }
 
@@ -54,6 +56,7 @@ public non-sealed class ProfileAboutController implements AlertScreen {
         ToggleGroup role = new ToggleGroup();
         roleUser.setToggleGroup(role);
         roleAdmin.setToggleGroup(role);
+        setUser(currentUser);
         setDisabled(true);
     }
 
