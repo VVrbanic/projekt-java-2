@@ -20,13 +20,13 @@
   <rowConstraints>
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="41.0" minHeight="1.0" prefHeight="28.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="86.0" minHeight="0.0" prefHeight="33.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="139.0" minHeight="10.0" prefHeight="139.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="26.799993896484366" minHeight="10.0" prefHeight="18.799993896484366" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="46.00000610351563" minHeight="10.0" prefHeight="27.20001831054688" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="51.59998168945313" minHeight="10.0" prefHeight="23.199981689453125" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="61.20001831054688" minHeight="10.0" prefHeight="28.800012207031244" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="61.79998779296875" minHeight="1.0" prefHeight="23.199987792968756" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="86.0" minHeight="0.0" prefHeight="31.399987792968744" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="182.40001220703124" minHeight="10.0" prefHeight="182.40001220703124" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <fx:include fx:id="menuBar" source="menubar-view.fxml" GridPane.columnSpan="2" GridPane.valignment="TOP" />
@@ -99,12 +99,12 @@
       </RadioButton>
       <TableView fx:id="userTableView" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="8">
         <columns>
-            <TableColumn fx:id="userIdColumn" prefWidth="81.60003662109375" text="ID" />
-          <TableColumn fx:id="firstNameColumn" prefWidth="193.5999755859375" text="First name" />
-          <TableColumn fx:id="lastNameColumn" prefWidth="130.39996337890625" text="Last name" />
-            <TableColumn fx:id="emailColumn" prefWidth="124.79998779296875" text="E-mail" />
-            <TableColumn fx:id="userNameColumn" prefWidth="115.20001220703125" text="User name" />
-            <TableColumn fx:id="isAdminColumn" prefWidth="92.800048828125" text="Role" />
+            <TableColumn fx:id="userIdColumn" prefWidth="100" text="ID" />
+          <TableColumn fx:id="firstNameColumn" prefWidth="200" text="First name" />
+          <TableColumn fx:id="lastNameColumn" prefWidth="200" text="Last name" />
+            <TableColumn fx:id="emailColumn" prefWidth="200" text="E-mail" />
+            <TableColumn fx:id="userNameColumn" prefWidth="200" text="User name" />
+            <TableColumn fx:id="isAdminColumn" prefWidth="100" text="Admin" />
         </columns>
       </TableView>
    </children>

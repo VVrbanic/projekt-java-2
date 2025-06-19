@@ -40,6 +40,7 @@ public class DataBase {
                         .setUserName(rs.getString("user_name"))
                         .setIsAdmin(rs.getLong("is_admin") != 0)
                         .setEmail(rs.getString("email"))
+                        .setPassword(rs.getString("password"))
                         .build());
             }
             return  users;
@@ -51,12 +52,11 @@ public class DataBase {
 
     }
 
-    public static Optional<User> getUserIfExists(String email, String password) throws DatabaseException {
+    public static Optional<User> getUserByEmail(String email) throws DatabaseException {
         try (Connection conn = DataBase.connection()) {
-            String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+            String sql = "SELECT * FROM users WHERE email = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, email);
-            stmt.setString(2, DataBase.hashPassword(password));
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
                 return Optional.ofNullable(new User.UserBuilder()
@@ -83,4 +83,5 @@ public class DataBase {
     public static String hashPassword(String password){
         return String.valueOf(password.hashCode());
     }
+
 }

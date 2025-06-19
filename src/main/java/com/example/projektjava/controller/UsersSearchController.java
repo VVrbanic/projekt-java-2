@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public non-sealed class UsersSearchController implements AlertScreen {
+public class UsersSearchController implements AlertScreen {
     @FXML
     public TextField firstName;
     @FXML

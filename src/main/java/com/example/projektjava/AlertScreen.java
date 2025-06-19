@@ -7,7 +7,7 @@ import javafx.scene.control.ButtonType;
 import java.util.List;
 import java.util.Optional;
 
-public sealed interface AlertScreen permits LoginController, ProfileAboutController, SignUpController, UsersEditController, UsersSearchController {
+public interface AlertScreen {
     static void userExists() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("ERROR!");

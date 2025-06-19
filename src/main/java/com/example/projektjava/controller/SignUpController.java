@@ -6,6 +6,7 @@ import com.example.projektjava.AlertScreen;
 import com.example.projektjava.UserSession;
 import com.example.projektjava.dataBase.DataBase;
 import com.example.projektjava.exceptions.DatabaseException;
+import com.example.projektjava.model.Printer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -19,7 +20,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public non-sealed class SignUpController implements AlertScreen {
+public class SignUpController implements AlertScreen {
     @FXML
     public TextField firstName;
     @FXML
@@ -44,6 +45,8 @@ public non-sealed class SignUpController implements AlertScreen {
     private Node menuBar;
 
     UserSession session = UserSession.getInstance();
+    Printer<String> success = new Printer<>( "User registered successfully, please log in!");
+    Printer<String> successShort = new Printer<>( "User registered successfully");
 
     public void initialize() {
         ToggleGroup role = new ToggleGroup();
@@ -93,14 +96,14 @@ public non-sealed class SignUpController implements AlertScreen {
 
 
                 if(session == null){
-                    AlertScreen.showAlert(Alert.AlertType.INFORMATION, "User registered successfully, please log in!");
+                    AlertScreen.showAlert(Alert.AlertType.INFORMATION, success.getPrintThing());
                     FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("welcome-view.fxml"));
                     Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
                     HelloApplication.getMainStage().setTitle("Welcome");
                     HelloApplication.getMainStage().setScene(scene);
                     HelloApplication.getMainStage().show();
                 }else{
-                    AlertScreen.showAlert(Alert.AlertType.INFORMATION, "User registered successfully");
+                    AlertScreen.showAlert(Alert.AlertType.INFORMATION, successShort.getPrintThing());
                     clearAll();
                 }
 

@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public non-sealed class UsersEditController implements AlertScreen {
+public class UsersEditController implements AlertScreen {
     private Long id;
     @FXML
     public TextField firstName;

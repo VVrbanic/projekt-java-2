@@ -6,6 +6,7 @@ import com.example.projektjava.HelloApplication;
 import com.example.projektjava.UserSession;
 import com.example.projektjava.dataBase.DataBase;
 import com.example.projektjava.exceptions.DatabaseException;
+import com.example.projektjava.model.Printer;
 import com.example.projektjava.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +20,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public non-sealed class ProfileAboutController implements AlertScreen {
+public class ProfileAboutController implements AlertScreen {
     @FXML
     public TextField firstName;
     @FXML
@@ -37,6 +38,7 @@ public non-sealed class ProfileAboutController implements AlertScreen {
     @FXML
     public Button saveButton;
 
+    Printer<String> success = new Printer("User registered successfully, please log in!");
 
     private Long id;
 
@@ -82,7 +84,7 @@ public non-sealed class ProfileAboutController implements AlertScreen {
 
                 stmt.executeUpdate();
 
-                AlertScreen.showAlert(Alert.AlertType.INFORMATION, "User registered successfully, please log in!");
+                AlertScreen.showAlert(Alert.AlertType.INFORMATION, success.getPrintThing() );
                 FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("welcome-view.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
                 HelloApplication.getMainStage().setTitle("Welcome");
