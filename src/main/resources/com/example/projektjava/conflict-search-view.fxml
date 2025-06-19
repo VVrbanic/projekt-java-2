@@ -36,11 +36,11 @@
       <TableView fx:id="conflictTableView" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="5" GridPane.rowSpan="2147483647">
         <columns>
           <TableColumn fx:id="idColumn" prefWidth="50" text="ID" />
-          <TableColumn fx:id="dateColumn" prefWidth="50" text="Date" />
-            <TableColumn fx:id="reportedByColumn" prefWidth="50" text="Reported by" />
-            <TableColumn fx:id="descriptionColumn" prefWidth="200" text="Description" />
-            <TableColumn fx:id="involvedColumn" prefWidth="200" text="Involved" />
-            <TableColumn fx:id="statusColumn" prefWidth="50" text="Status" />
+          <TableColumn fx:id="dateColumn" prefWidth="150" text="Date" />
+            <TableColumn fx:id="reportedByColumn" prefWidth="150" text="Reported by" />
+            <TableColumn fx:id="descriptionColumn" prefWidth="300" text="Description" />
+            <TableColumn fx:id="involvedColumn" prefWidth="250" text="Involved" />
+            <TableColumn fx:id="statusColumn" prefWidth="100" text="Status" />
         </columns>
       </TableView>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Reported by" GridPane.columnIndex="1" GridPane.rowIndex="2">
