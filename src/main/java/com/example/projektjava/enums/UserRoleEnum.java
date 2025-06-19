@@ -1,9 +1,8 @@
 package com.example.projektjava.enums;
 
-public enum Statuses {
-    NEW(1, "New"),
-    IN_REVIEW(2,"In review"),
-    RESOLVED(3, "Resolved");
+public enum UserRoleEnum {
+    ADMIN(1, "Admin"),
+    USER(2,"User");
 
 
     private int id;
@@ -18,7 +17,7 @@ public enum Statuses {
     }
 
 
-    Statuses(int id, String name) {
+    UserRoleEnum(int id, String name) {
         this.id = id;
         this.name = name;
     }

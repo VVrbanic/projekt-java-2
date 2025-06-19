@@ -57,4 +57,22 @@ public class MenubarController{
         HelloApplication.getMainStage().setScene(scene);
         HelloApplication.getMainStage().show();
     }
+
+    @FXML
+    protected void newConflict() throws IOException{
+        FXMLLoader fxmlLoader = new  FXMLLoader(HelloApplication.class.getResource("new-conflict-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
+        HelloApplication.getMainStage().setTitle("New conflict");
+        HelloApplication.getMainStage().setScene(scene);
+        HelloApplication.getMainStage().show();
+    }
+
+    @FXML
+    protected void searchConflict() throws IOException{
+        FXMLLoader fxmlLoader = new  FXMLLoader(HelloApplication.class.getResource("conflict-search-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
+        HelloApplication.getMainStage().setTitle("Search conflict");
+        HelloApplication.getMainStage().setScene(scene);
+        HelloApplication.getMainStage().show();
+    }
 }

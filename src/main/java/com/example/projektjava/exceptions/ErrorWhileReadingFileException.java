@@ -3,7 +3,7 @@ package com.example.projektjava.exceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ErrorWhileReadingFileException extends RuntimeException {
+public class ErrorWhileReadingFileException extends Exception {
     private static final Logger logger = LoggerFactory.getLogger(ErrorWhileReadingFileException.class);
 
     public ErrorWhileReadingFileException() {

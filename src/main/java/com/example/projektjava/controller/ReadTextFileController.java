@@ -24,7 +24,7 @@ public class ReadTextFileController {
 
 
 
-    public static boolean checkIfUserExists(String email, String password) throws DatabaseException {
+    public static boolean checkIfUserExists(String email, String password) throws ErrorWhileReadingFileException {
         Set<UserInfo> usersInfo = getUsersFromFile();
         if(usersInfo.isEmpty()){
             throw new ErrorWhileReadingFileException(noUserFound.getPrintThing());
@@ -37,7 +37,7 @@ public class ReadTextFileController {
         return false;
     }
 
-    public static Set<UserInfo> getUsersFromFile() throws DatabaseException {
+    public static Set<UserInfo> getUsersFromFile() throws ErrorWhileReadingFileException {
         setUserInfoToFile();
         Set<UserInfo> users = new HashSet<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(pathToTextFile))) {
@@ -57,7 +57,7 @@ public class ReadTextFileController {
         return users;
     }
 
-    private static void setUserInfoToFile() throws DatabaseException {
+    private static void setUserInfoToFile() {
         List<User> users = DataBase.getAllUsers();
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(pathToTextFile))){
             for(User user : users){

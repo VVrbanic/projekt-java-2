@@ -63,7 +63,7 @@ public class ProfileAboutController implements AlertScreen {
     }
 
     @FXML
-    protected void saveButtonClicked() throws DatabaseException {
+    protected void saveButtonClicked() {
         List<String> messages = isFull();
         if (messages.isEmpty()) {
             String first = firstName.getText();

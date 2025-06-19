@@ -8,8 +8,9 @@
   <menus>
     <Menu mnemonicParsing="false" text="Confilct">
       <items>
-        <MenuItem mnemonicParsing="false" text="New " />
-            <MenuItem mnemonicParsing="false" text="Conflict" />
+        <MenuItem mnemonicParsing="false" onAction="#newConflict" text="New " />
+            <MenuItem mnemonicParsing="false" onAction="#searchConflict" text="Search" />
+            <MenuItem mnemonicParsing="false" onAction="#searchConflict" text="Edit" />
       </items>
     </Menu>
     <Menu mnemonicParsing="false" text="Profil">

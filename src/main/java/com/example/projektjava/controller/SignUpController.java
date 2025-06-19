@@ -65,7 +65,7 @@ public class SignUpController implements AlertScreen {
     }
 
     @FXML
-    protected void signUpButtonClicked() throws DatabaseException {
+    protected void signUpButtonClicked() {
         List<String> messages = isFull();
         if (messages.isEmpty()) {
             String first = firstName.getText();

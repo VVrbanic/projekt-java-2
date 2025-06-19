@@ -36,3 +36,16 @@ INSERT INTO statuses (name) VALUES
     ('In Review'),
     ('Resolved');
 
+
+ALTER TABLE conflicts
+DROP COLUMN created_at;
+
+ALTER TABLE conflicts
+DROP COLUMN updated_at;
+
+ALTER TABLE conflicts
+DROP COLUMN updated_by;
+
+ALTER TABLE conflicts ADD date DATE;
+
+

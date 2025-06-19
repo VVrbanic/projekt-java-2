@@ -5,12 +5,9 @@ import com.example.projektjava.AppConstants;
 import com.example.projektjava.UserSession;
 import com.example.projektjava.dataBase.DataBase;
 import com.example.projektjava.exceptions.DatabaseException;
-import com.example.projektjava.exceptions.DeleteException;
-import com.example.projektjava.exceptions.NoConnectionToDatabaseException;
 import com.example.projektjava.model.User;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.slf4j.Logger;
@@ -57,8 +54,8 @@ public class UsersSearchController implements AlertScreen {
     private TableColumn<User,String> isAdminColumn;
 
     UserSession session = UserSession.getInstance();
-    private static final Logger logger = LoggerFactory.getLogger(NoConnectionToDatabaseException.class);
-    public void initialize() throws DatabaseException {
+    private static final Logger logger = LoggerFactory.getLogger(UsersSearchController.class);
+    public void initialize() {
         ToggleGroup role = new ToggleGroup();
         roleUser.setToggleGroup(role);
         roleAdmin.setToggleGroup(role);
@@ -72,7 +69,7 @@ public class UsersSearchController implements AlertScreen {
     }
 
     @FXML
-    protected void search() throws DatabaseException {
+    protected void search() {
         String first = firstName.getText();
         String last = lastName.getText();
         String user = userName.getText();

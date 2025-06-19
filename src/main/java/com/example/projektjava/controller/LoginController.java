@@ -5,6 +5,7 @@ import com.example.projektjava.AlertScreen;
 import com.example.projektjava.UserSession;
 import com.example.projektjava.dataBase.DataBase;
 import com.example.projektjava.exceptions.DatabaseException;
+import com.example.projektjava.exceptions.ErrorWhileReadingFileException;
 import com.example.projektjava.model.Printer;
 import com.example.projektjava.model.User;
 import javafx.fxml.FXML;
@@ -39,7 +40,7 @@ public class LoginController implements AlertScreen {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     @FXML
-    protected void logInButtonClicked() throws IOException, DatabaseException {
+    protected void logInButtonClicked() throws IOException, ErrorWhileReadingFileException {
         List<String> messages = isFull();
         if (messages.isEmpty()) {
             if(ReadTextFileController.checkIfUserExists(email.getText(), password.getText())) {

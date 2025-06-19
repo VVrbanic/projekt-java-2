@@ -65,7 +65,7 @@ public class UsersEditController implements AlertScreen {
 
     UserSession session = UserSession.getInstance();
     private static final Logger logger = LoggerFactory.getLogger(NoConnectionToDatabaseException.class);
-    public void initialize() throws DatabaseException {
+    public void initialize() {
         ToggleGroup role = new ToggleGroup();
         roleUser.setToggleGroup(role);
         roleAdmin.setToggleGroup(role);
@@ -102,7 +102,7 @@ public class UsersEditController implements AlertScreen {
     }
 
     @FXML
-    protected void save() throws DatabaseException {
+    protected void save() {
         List<String> messages = isFull();
         if (messages.isEmpty()) {
             String first = firstName.getText();
