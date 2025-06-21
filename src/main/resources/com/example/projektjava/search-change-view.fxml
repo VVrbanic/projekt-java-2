@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projektjava.controller.ChangeSearchController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="26.799993896484366" minHeight="10.0" prefHeight="18.799993896484366" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="46.00000610351563" minHeight="10.0" prefHeight="27.20001831054688" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="51.59998168945313" minHeight="10.0" prefHeight="23.199981689453125" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="86.0" minHeight="0.0" prefHeight="31.399987792968744" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="182.40001220703124" minHeight="10.0" prefHeight="182.40001220703124" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <fx:include fx:id="menuBar" source="menubar-view.fxml" GridPane.columnSpan="4" GridPane.valignment="TOP" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Type od change" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets right="20.0" />
+         </GridPane.margin>
+      </Text>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Table" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets right="20.0" />
+         </GridPane.margin>
+      </Text>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Logs" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Text>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New value" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets right="20.0" />
+         </GridPane.margin>
+      </Text>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Old value" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets right="20.0" />
+         </GridPane.margin>
+      </Text>
+      <Button fx:id="searchButton" mnemonicParsing="false" onAction="#search" text="Search" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="5">
+         <GridPane.margin>
+            <Insets right="20.0" />
+         </GridPane.margin></Button>
+      <TextField fx:id="oldValue" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="20.0" right="20.0" />
+         </GridPane.margin>
+      </TextField>
+      <TextField fx:id="user" GridPane.columnIndex="3" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets left="20.0" right="20.0" />
+         </GridPane.margin>
+      </TextField>
+      <TextField fx:id="table" GridPane.columnIndex="3" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="20.0" right="20.0" />
+         </GridPane.margin>
+      </TextField>
+      <TextField fx:id="newValue" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets left="20.0" right="20.0" />
+         </GridPane.margin>
+      </TextField>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="User" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets right="20.0" />
+         </GridPane.margin>
+      </Text>
+      <TableView fx:id="changeTableView" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="6">
+        <columns>
+          <TableColumn fx:id="oldValueColumn" prefWidth="250" text="Old value" />
+          <TableColumn fx:id="newValueColumn" prefWidth="250" text="New value" />
+            <TableColumn fx:id="changeTypeColumn" prefWidth="100" text="Change type" />
+            <TableColumn fx:id="tableColumn" prefWidth="100" text="Table" />
+            <TableColumn fx:id="userColumn" prefWidth="100" text="User" />
+            <TableColumn fx:id="dateColumn" prefWidth="200" text="Date" />
+        </columns>
+      </TableView>
+      <ChoiceBox fx:id="changeType" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets left="20.0" right="20.0" />
+         </GridPane.margin>
+      </ChoiceBox>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets right="20.0" />
+         </GridPane.margin>
+      </Text>
+      <DatePicker GridPane.columnIndex="3" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets left="20.0" right="20.0" />
+         </GridPane.margin>
+      </DatePicker>
+   </children>
+</GridPane>

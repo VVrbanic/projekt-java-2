@@ -84,4 +84,13 @@ public class MenubarController{
         HelloApplication.getMainStage().setScene(scene);
         HelloApplication.getMainStage().show();
     }
+
+    @FXML
+    protected void seeLogs() throws IOException{
+        FXMLLoader fxmlLoader = new  FXMLLoader(HelloApplication.class.getResource("search-change-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
+        HelloApplication.getMainStage().setTitle("Logs");
+        HelloApplication.getMainStage().setScene(scene);
+        HelloApplication.getMainStage().show();
+    }
 }

@@ -5,4 +5,6 @@ public class AppConstants {
     public static Long FALSE = 0L;
     public static String propFilePath = "C:\\Users\\Vera\\Desktop\\Java\\projekt-java\\src\\main\\java\\com\\example\\projektjava\\dataBase\\database.properties";
     public static String reporteUnknown = "Anonimna prijava";
+    public static String userTable = "User";
+    public static String conflictTable = "Conflict";
 }

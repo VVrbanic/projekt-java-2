@@ -1,12 +1,10 @@
 package com.example.projektjava.controller;
 
-import com.example.projektjava.AppConstants;
-import com.example.projektjava.HelloApplication;
-import com.example.projektjava.AlertScreen;
-import com.example.projektjava.UserSession;
+import com.example.projektjava.*;
 import com.example.projektjava.dataBase.DataBase;
 import com.example.projektjava.exceptions.DatabaseException;
 import com.example.projektjava.model.Printer;
+import com.example.projektjava.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -93,8 +91,6 @@ public class SignUpController implements AlertScreen {
                 stmt.setString(7, mail);
 
                 stmt.executeUpdate();
-
-
                 if(session == null){
                     AlertScreen.showAlert(Alert.AlertType.INFORMATION, success.getPrintThing());
                     FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("welcome-view.fxml"));
@@ -103,6 +99,7 @@ public class SignUpController implements AlertScreen {
                     HelloApplication.getMainStage().setScene(scene);
                     HelloApplication.getMainStage().show();
                 }else{
+                    BinaryFile.recordAddUser(id);
                     AlertScreen.showAlert(Alert.AlertType.INFORMATION, successShort.getPrintThing());
                     clearAll();
                 }
