@@ -33,7 +33,10 @@ public final class DataBase {
     }
     //USER
     public static Long getNextUserId() {
-        return (long) (getAllUsers().size() + 1);
+        return getAllUsers().stream()
+                .mapToLong(user -> user.getId())
+                .max()
+                .orElse(0L) + 1;
     }
 
     public static List<User> getAllUsers() {
@@ -141,7 +144,10 @@ public final class DataBase {
 
     //CONFLICT
     public static Long getNextConflictId() {
-        return (long) (getAllConflicts().size() + 1);
+        return getAllConflicts().stream()
+                .mapToLong(conflict -> conflict.getId())
+                .max()
+                .orElse(0L) + 1;
     }
 
     public static List<ConflictForm> getAllConflicts() {
@@ -186,7 +192,10 @@ public final class DataBase {
     }
     //USER CONFLICT
     public static Long getNextConflictUsersId(){
-        return  (long) (getAllConflictUsers().size() + 1);
+        return getAllConflictUsers().stream()
+                .mapToLong(conflictUser -> conflictUser.getId())
+                .max()
+                .orElse(0L) + 1;
     }
     private static List<ConflictUsers> getAllConflictUsers(){
         List<ConflictUsers> conflictUsers = new ArrayList<>();

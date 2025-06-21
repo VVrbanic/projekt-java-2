@@ -10,15 +10,16 @@ import com.example.projektjava.model.User;
 import com.example.projektjava.model.UserPrint;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class ConflictSearchController implements AlertScreen {
@@ -30,7 +31,6 @@ public class ConflictSearchController implements AlertScreen {
     public DatePicker date;
     @FXML
     public ChoiceBox<StatusEnum> status;
-
     @FXML
     private TableView<ConflictForm> conflictTableView;
     @FXML
@@ -46,21 +46,28 @@ public class ConflictSearchController implements AlertScreen {
     @FXML
     private TableColumn<ConflictForm,String> statusColumn;
 
+
     UserSession session = UserSession.getInstance();
     private static final Logger logger = LoggerFactory.getLogger(ConflictSearchController.class);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    Pattern pattern = Pattern.compile("\\((\\d+)\\)");
+
+
     public void initialize() {
         date.setValue(LocalDate.now());
 
         conflictTableView.setItems(FXCollections.observableList(DataBase.getAllConflicts()));
         idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getId())));
-        reportedByColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getReporter() != null ? cellData.getValue().getReporter().getFirstName() +" "+ cellData.getValue().getReporter().getLastName() : AppConstants.reporteUnknown));
+        reportedByColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getReporter() != null ?
+                cellData.getValue().getReporter().getFirstName() +" "+ cellData.getValue().getReporter().getLastName()+ " (" + cellData.getValue().getReporter().getId() + ") " :
+                AppConstants.reporteUnknown));
         dateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getDate())));
         statusColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatus().getName()));
         descriptionColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescription()));
         involvedColumn.setCellValueFactory(cellData -> {
                     List<User> users = cellData.getValue().getUserInvolved();
                     String names = users.stream()
-                            .map(user -> user.getFirstName() + " " + user.getLastName())
+                            .map(user -> user.getFirstName() + " " + user.getLastName() + " (" + user.getId() + ") ")
                             .collect(Collectors.joining(", "));
                     return new SimpleStringProperty(names);
                 }
@@ -77,11 +84,46 @@ public class ConflictSearchController implements AlertScreen {
     @FXML
     protected void search() {
         List<ConflictForm> allConflicts = DataBase.getAllConflicts();
-        List<ConflictForm> matchedConflicts = new ArrayList<>();
-
-
-
-        conflictTableView.setItems(FXCollections.observableArrayList(matchedConflicts));
+        //dodati filtriranje
+        LocalDate dateS = date.getValue();
+        String involvedId;
+        if (involved.getValue() != null) {
+            Matcher matcherInvolvedId = pattern.matcher(involved.getValue());
+            if (matcherInvolvedId.find()) {
+                involvedId = matcherInvolvedId.group(1);
+            } else {
+                involvedId = null;
+            }
+        } else {
+            involvedId = null;
+        }
+        String reportedById;
+        if (reportedBy.getValue() != null) {
+            Matcher matcherReportedById = pattern.matcher(reportedBy.getValue());
+            if (matcherReportedById.find()) {
+                reportedById = matcherReportedById.group(1);
+            } else {
+                reportedById = null;
+            }
+        } else {
+            reportedById = null;
+        }
+        Long statusS = status.getValue() != null ? status.getValue().getId() : null;
+        List<ConflictForm> filteredConflicts = allConflicts.stream()
+                .filter(conflict ->
+                        (dateS == null || (conflict.getDate() != null && conflict.getDate().equals(dateS))) &&
+                        (statusS == null || (conflict.getStatus() != null && conflict.getStatus().getId().equals(statusS))) &&
+                        (reportedById == null || (conflict.getReporter() != null &&
+                                conflict.getReporter().getId() != null &&
+                                conflict.getReporter().getId().equals(Long.valueOf(reportedById)))) &&
+                        (involvedId == null || (conflict.getUserInvolved() != null &&
+                                conflict.getUserInvolved().stream()
+                                        .anyMatch(user -> user != null &&
+                                                user.getId() != null &&
+                                                user.getId().equals(Long.valueOf(involvedId)))))
+                )
+                .collect(Collectors.toList());
+        conflictTableView.setItems(FXCollections.observableArrayList(filteredConflicts));
 
     }
 

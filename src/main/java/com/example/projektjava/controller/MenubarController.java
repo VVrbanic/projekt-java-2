@@ -75,4 +75,13 @@ public class MenubarController{
         HelloApplication.getMainStage().setScene(scene);
         HelloApplication.getMainStage().show();
     }
+
+    @FXML
+    protected void editConflict() throws IOException{
+        FXMLLoader fxmlLoader = new  FXMLLoader(HelloApplication.class.getResource("conflict-edit-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
+        HelloApplication.getMainStage().setTitle("Edit conflict");
+        HelloApplication.getMainStage().setScene(scene);
+        HelloApplication.getMainStage().show();
+    }
 }

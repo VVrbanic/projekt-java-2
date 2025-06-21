@@ -10,7 +10,7 @@
       <items>
         <MenuItem mnemonicParsing="false" onAction="#newConflict" text="New " />
             <MenuItem mnemonicParsing="false" onAction="#searchConflict" text="Search" />
-            <MenuItem mnemonicParsing="false" onAction="#searchConflict" text="Edit" />
+            <MenuItem mnemonicParsing="false" onAction="#editConflict" text="Edit" />
       </items>
     </Menu>
     <Menu mnemonicParsing="false" text="Profil">

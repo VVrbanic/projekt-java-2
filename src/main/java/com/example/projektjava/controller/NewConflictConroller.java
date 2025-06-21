@@ -68,38 +68,38 @@ public class NewConflictConroller implements AlertScreen {
             String descriptionS = description.getText();
             LocalDate dateS = date.getValue();
             Long statusLong = StatusEnum.NEW.getId();
-
-            try(Connection con = DataBase.connection()) {
-                String sql = "INSERT INTO conflicts (id, reporter_id, description, status_id, date) VALUES (?, ?, ?, ?, ?)";
-                PreparedStatement stmt = con.prepareStatement(sql);
-                stmt.setLong(1, id);
-                if (reporterId != null) {
-                    stmt.setLong(2, reporterId);
-                } else {
-                    stmt.setNull(2, java.sql.Types.BIGINT);
-                }
-                stmt.setString(3, descriptionS);
-                stmt.setLong(4, statusLong);
-                stmt.setDate(5, Date.valueOf(dateS));
-                stmt.executeUpdate();
-                AlertScreen.conformation(reportConformation.getPrintThing());
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            try(Connection con = DataBase.connection()){
-                Long conflictUsersId = DataBase.getNextConflictUsersId();
-                for(Long userId : userIdList){
-                    String sql = "INSERT INTO conflict_users (id, conflict_id, user_id) VALUES (?, ?, ?)";
+            if (AlertScreen.conformation(reportConformation.getPrintThing())) {
+                try (Connection con = DataBase.connection()) {
+                    String sql = "INSERT INTO conflicts (id, reporter_id, description, status_id, date) VALUES (?, ?, ?, ?, ?)";
                     PreparedStatement stmt = con.prepareStatement(sql);
-                    stmt.setLong(1, conflictUsersId);
-                    stmt.setLong(2, id);
-                    stmt.setLong(3, userId);
+                    stmt.setLong(1, id);
+                    if (reporterId != null) {
+                        stmt.setLong(2, reporterId);
+                    } else {
+                        stmt.setNull(2, java.sql.Types.BIGINT);
+                    }
+                    stmt.setString(3, descriptionS);
+                    stmt.setLong(4, statusLong);
+                    stmt.setDate(5, Date.valueOf(dateS));
                     stmt.executeUpdate();
-                    conflictUsersId++;
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
+                try (Connection con = DataBase.connection()) {
+                    Long conflictUsersId = DataBase.getNextConflictUsersId();
+                    for (Long userId : userIdList) {
+                        String sql = "INSERT INTO conflict_users (id, conflict_id, user_id) VALUES (?, ?, ?)";
+                        PreparedStatement stmt = con.prepareStatement(sql);
+                        stmt.setLong(1, conflictUsersId);
+                        stmt.setLong(2, id);
+                        stmt.setLong(3, userId);
+                        stmt.executeUpdate();
+                        conflictUsersId++;
+                    }
 
+                }
             }
         }else{
             AlertScreen.mandatoryFieldsNotFilled(messages);
