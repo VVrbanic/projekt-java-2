@@ -58,13 +58,12 @@ public class ReadTextFileController {
     }
 
     private static void setUserInfoToFile() {
-        List<User> users = DataBase.getAllUsers();
+        List<User> users = DataBase.getAllActiveUsers();
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(pathToTextFile))){
             for(User user : users){
                 writer.write(user.getEmail() + ',' + user.getPassword());
                 writer.newLine();
             }
-
         }catch (IOException ex){
             logger.error(errorWhileWritingFile.getPrintThing(), ex.getMessage());
 

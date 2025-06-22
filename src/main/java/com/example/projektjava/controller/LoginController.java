@@ -45,7 +45,7 @@ public class LoginController implements AlertScreen {
         if (messages.isEmpty()) {
             if(ReadTextFileController.checkIfUserExists(email.getText(), password.getText())) {
                 logger.info(loginSuccess.getPrintThing());
-                Optional<User>  user = DataBase.getUserByEmail(email.getText());
+                Optional<User>  user = DataBase.getUserByEmailLogin(email.getText());
                 if(user.isPresent()) {
                     UserSession.init(user.get());
                 }else{

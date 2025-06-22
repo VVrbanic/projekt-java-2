@@ -47,11 +47,7 @@ public class ConflictSearchController implements AlertScreen {
     private TableColumn<ConflictForm,String> statusColumn;
 
 
-    UserSession session = UserSession.getInstance();
-    private static final Logger logger = LoggerFactory.getLogger(ConflictSearchController.class);
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     Pattern pattern = Pattern.compile("\\((\\d+)\\)");
-
 
     public void initialize() {
         date.setValue(LocalDate.now());

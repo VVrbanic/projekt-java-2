@@ -82,7 +82,8 @@ public class UsersSearchController implements AlertScreen {
                     + " AND last_name LIKE ?"
                     + " AND user_name LIKE ?"
                     + " AND email LIKE ?"
-                    + " AND is_admin = ?";
+                    + " AND is_admin = ?"
+                    + "AND active = ?";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, "%" + first + "%");
@@ -90,6 +91,7 @@ public class UsersSearchController implements AlertScreen {
             stmt.setString(3, "%" + user + "%");
             stmt.setString(4, "%" + mail + "%");
             stmt.setBoolean(5, Objects.equals(role, AppConstants.TRUE));
+            stmt.setLong(5, AppConstants.TRUE);
             stmt.executeQuery();
             ResultSet rs = stmt.executeQuery();
             List<User> matchedUsers = new ArrayList<>();

@@ -3,6 +3,7 @@ package com.example.projektjava.controller;
 import com.example.projektjava.AlertScreen;
 
 import com.example.projektjava.AppConstants;
+import com.example.projektjava.BinaryFile;
 import com.example.projektjava.UserSession;
 import com.example.projektjava.dataBase.DataBase;
 import com.example.projektjava.enums.StatusEnum;
@@ -105,6 +106,7 @@ public class NewConflictConroller implements AlertScreen {
                     throw new DatabaseException(e);
                 }
             }
+            BinaryFile.recordAdd(id, AppConstants.conflictTable);
             AlertScreen.info(success.getPrintThing());
             log.info(success.getPrintThing());
             clearAll();

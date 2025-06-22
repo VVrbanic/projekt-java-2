@@ -39,6 +39,25 @@ public final class DataBase {
                 .orElse(0L) + 1;
     }
 
+    public static List<User> getAllActiveUsers() {
+        List<User> users = new ArrayList<>();
+        String query = "SELECT * FROM users where active = 1";
+
+        try (Connection conn = connection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                users.add(buildUserFromResultSet(rs));
+            }
+
+        } catch (IOException | SQLException ex) {
+            throw new DatabaseException("Error fetching users.", ex);
+        }
+
+        return users;
+    }
+
     public static List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         String query = "SELECT * FROM users";
@@ -76,6 +95,28 @@ public final class DataBase {
         }
 
         return users;
+    }
+
+    public static Optional<User> getUserByEmailLogin(String email) {
+        String sql = "SELECT * FROM users WHERE email = ? AND active = ?";
+
+        try (Connection conn = connection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+            stmt.setLong(2, AppConstants.TRUE);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next() ? Optional.of(buildUserFromResultSet(rs)) : Optional.empty();
+            }
+
+        } catch (SQLException ex) {
+            AlertScreen.showAlert(Alert.AlertType.ERROR, "Database error: " + ex.getMessage());
+        } catch (IOException ex) {
+            throw new DatabaseException(ex);
+        }
+
+        return Optional.empty();
     }
 
     public static Optional<User> getUserByEmail(String email) {

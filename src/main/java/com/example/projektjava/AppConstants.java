@@ -8,4 +8,5 @@ public class AppConstants {
     public static String userTable = "User";
     public static String conflictTable = "Conflict";
     public static String errorGlobal = "Dogodila se pogreška!";
+    public static String binaryFilePath = "logs/change.dat";
 }

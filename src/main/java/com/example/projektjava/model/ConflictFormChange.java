@@ -5,35 +5,17 @@ import com.example.projektjava.enums.StatusEnum;
 import java.time.LocalDate;
 import java.util.List;
 
-public class ConflictForm {
-    private Long id;
-    private User reporter;
-    private List<User> userInvolved;
+public class ConflictFormChange {
+    private List<String> userInvolved;
     private String description;
     private StatusEnum status;
     private LocalDate date;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getReporter() {
-        return reporter;
-    }
-
-    public void setReporter(User reporter) {
-        this.reporter = reporter;
-    }
-
-    public List<User> getUserInvolved() {
+    public List<String> getUserInvolved() {
         return userInvolved;
     }
 
-    public void setUserInvolved(List<User> userInvolved) {
+    public void setUserInvolved(List<String> userInvolved) {
         this.userInvolved = userInvolved;
     }
 
@@ -61,14 +43,10 @@ public class ConflictForm {
         this.date = date;
     }
 
-    public ConflictForm(Long id, User reporter, List<User> userInvolved, String description, StatusEnum status, LocalDate date) {
-        this.id = id;
-        this.reporter = reporter;
+    public ConflictFormChange(List<String> userInvolved, String description, StatusEnum status, LocalDate date) {
         this.userInvolved = userInvolved;
         this.description = description;
         this.status = status;
         this.date = date;
     }
-
-    public ConflictForm(){};
 }

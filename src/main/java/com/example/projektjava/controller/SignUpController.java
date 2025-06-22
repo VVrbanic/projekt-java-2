@@ -107,7 +107,7 @@ public class SignUpController implements AlertScreen {
                     HelloApplication.getMainStage().setScene(scene);
                     HelloApplication.getMainStage().show();
                 }else{
-                    BinaryFile.recordAddUser(id);
+                    BinaryFile.recordAdd(id, AppConstants.userTable);
                     AlertScreen.showAlert(Alert.AlertType.INFORMATION, successShort.getPrintThing());
                     clearAll();
                 }

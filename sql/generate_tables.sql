@@ -48,4 +48,9 @@ DROP COLUMN updated_by;
 
 ALTER TABLE conflicts ADD date DATE;
 
+ALTER TABLE users
+ADD active number;
+
+UPDATE users
+SET active = 1;
 

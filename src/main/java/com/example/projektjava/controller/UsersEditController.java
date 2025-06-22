@@ -2,6 +2,7 @@ package com.example.projektjava.controller;
 
 import com.example.projektjava.AlertScreen;
 import com.example.projektjava.AppConstants;
+import com.example.projektjava.BinaryFile;
 import com.example.projektjava.UserSession;
 import com.example.projektjava.dataBase.DataBase;
 import com.example.projektjava.exceptions.DatabaseException;
@@ -63,6 +64,7 @@ public class UsersEditController implements AlertScreen {
     UserSession session = UserSession.getInstance();
     private static final Logger logger = LoggerFactory.getLogger(NoConnectionToDatabaseException.class);
     private Printer<String> editSuccess = new Printer<>("User updated successfully.");
+    private User oldUser;
 
     public void initialize() {
         ToggleGroup role = new ToggleGroup();
@@ -78,6 +80,7 @@ public class UsersEditController implements AlertScreen {
         userTableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && !userTableView.getSelectionModel().isEmpty()) {
                 User selectedUser = userTableView.getSelectionModel().getSelectedItem();
+                oldUser = selectedUser;
                 firstName.setText(selectedUser.getFirstName());
                 lastName.setText(selectedUser.getLastName());
                 email.setText(selectedUser.getEmail());
@@ -90,14 +93,12 @@ public class UsersEditController implements AlertScreen {
                     roleAdmin.setSelected(false);
                 }
                 id = selectedUser.getId();
-
             }
             else if (!userTableView.getSelectionModel().isEmpty()) {
                 User selectedUser = userTableView.getSelectionModel().getSelectedItem();
                 id = selectedUser.getId();
             }
         });
-
     }
 
     @FXML
@@ -109,7 +110,14 @@ public class UsersEditController implements AlertScreen {
             String user = userName.getText();
             String mail = email.getText();
             Long role = roleAdmin.isSelected() ? AppConstants.TRUE : AppConstants.FALSE;
-
+            User newUser = new User.UserBuilder()
+                    .setId(id)
+                    .setFirstName(first)
+                    .setLastName(last)
+                    .setUserName(user)
+                    .setIsAdmin(role.equals(1L) ? Boolean.TRUE : Boolean.FALSE)
+                    .setEmail(mail)
+                    .build();
 
             try (Connection conn = DataBase.connection()) {
                 String sql = "UPDATE users SET first_name = ?, last_name = ?, user_name = ?, email = ?, is_admin = ? WHERE id = ?";
@@ -122,6 +130,7 @@ public class UsersEditController implements AlertScreen {
                 stmt.setLong(6, id);
                 int rowsUpdated = stmt.executeUpdate();
                 if (rowsUpdated > 0) {
+                    BinaryFile.recordChangeUser(oldUser, newUser);
                     AlertScreen.info(editSuccess.getPrintThing());
                     logger.info("User updated successfully.");
                     clearAll();
@@ -147,12 +156,14 @@ public class UsersEditController implements AlertScreen {
         if(AlertScreen.conformation("Jeste sigurni da želite izbrisati korisnika?")) {
             if (!Objects.equals(id, session.getUser().getId())) {
                 try (Connection conn = DataBase.connection()) {
-                    String sql = "DELETE FROM users WHERE id = ?";
+                    String sql = "UPDATE users SET active = ? WHERE id = ?";
                     try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                        stmt.setLong(1, id);
+                        stmt.setLong(1, AppConstants.FALSE);
+                        stmt.setLong(2, id);
 
                         int rowsDeleted = stmt.executeUpdate();
                         if (rowsDeleted > 0) {
+                            BinaryFile.recordDelete(id, AppConstants.userTable);
                             logger.info("User deleted successfully.");
                             clearAll();
                             ObservableList<User> updatedList = FXCollections.observableArrayList(DataBase.getAllUsers());
@@ -173,6 +184,7 @@ public class UsersEditController implements AlertScreen {
             }
         }
     }
+
     public List<String> isFull() {
         List<String> messages = new ArrayList<>();
         if (firstName.getText().isBlank()) {

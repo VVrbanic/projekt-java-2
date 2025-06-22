@@ -2,13 +2,10 @@ package com.example.projektjava.controller;
 
 import com.example.projektjava.AlertScreen;
 import com.example.projektjava.AppConstants;
-import com.example.projektjava.UserSession;
+import com.example.projektjava.BinaryFile;
 import com.example.projektjava.dataBase.DataBase;
 import com.example.projektjava.enums.StatusEnum;
-import com.example.projektjava.model.ConflictForm;
-import com.example.projektjava.model.Printer;
-import com.example.projektjava.model.User;
-import com.example.projektjava.model.UserPrint;
+import com.example.projektjava.model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -62,6 +59,7 @@ public class ConflictEditController implements AlertScreen {
     private Printer<String> noUserSelected = new Printer("Nije ozačen niti jedan korisnik");
     private Printer<String> deleteConformation = new Printer("Jeste li sigurni da zelite obrisati konflikt?");
     private Printer<String> success = new Printer("Uspješno!");
+    private ConflictFormChange oldConflict;
 
 
     public void initialize() {
@@ -91,26 +89,24 @@ public class ConflictEditController implements AlertScreen {
                 .toList());
         involved.setItems(observableList);
         conflictTableView.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2 && !conflictTableView.getSelectionModel().isEmpty()) {
+            if (!conflictTableView.getSelectionModel().isEmpty()) {
                 ConflictForm conflictForm = conflictTableView.getSelectionModel().getSelectedItem();
                 conflictId = conflictForm.getId();
-                involved.getSelectionModel().clearSelection();
-                for (User involvedUser : conflictForm.getUserInvolved()) {
-                    for (int i = 0; i < involved.getItems().size(); i++) {
-                        String item = involved.getItems().get(i);
-                        if (item.contains("(" + involvedUser.getId() + ")")) {
-                            involved.getSelectionModel().select(i);
+                if(event.getClickCount() == 2) {
+                    oldConflict = new ConflictFormChange(conflictForm.getUserInvolved().stream().map(user -> String.valueOf(user.getFullNameAndId())).collect(Collectors.toList()), conflictForm.getDescription(), conflictForm.getStatus(), conflictForm.getDate());
+                    involved.getSelectionModel().clearSelection();
+                    for (User involvedUser : conflictForm.getUserInvolved()) {
+                        for (int i = 0; i < involved.getItems().size(); i++) {
+                            String item = involved.getItems().get(i);
+                            if (item.contains("(" + involvedUser.getId() + ")")) {
+                                involved.getSelectionModel().select(i);
+                            }
                         }
                     }
+                    date.setValue(conflictForm.getDate());
+                    description.setText(conflictForm.getDescription());
+                    status.setValue(conflictForm.getStatus());
                 }
-                date.setValue(conflictForm.getDate());
-                description.setText(conflictForm.getDescription());
-                status.setValue(conflictForm.getStatus());
-            }
-        });
-        conflictTableView.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 1 && !conflictTableView.getSelectionModel().isEmpty()) {
-                conflictId = conflictTableView.getSelectionModel().getSelectedItem().getId();
             }
         });
     }
@@ -122,6 +118,7 @@ public class ConflictEditController implements AlertScreen {
             String descriptionS = description.getText();
             LocalDate dateS = date.getValue();
             Long statusLong = status.getValue().getId();
+            ConflictFormChange newConflictChange = new ConflictFormChange(involved.getSelectionModel().getSelectedItems(), descriptionS, StatusEnum.getNameById(statusLong), dateS);
             if(AlertScreen.conformation(reportConformation.getPrintThing())) {
                 try (Connection con = DataBase.connection()) {
                     String sql = "UPDATE conflicts SET description = ?, status_id = ?, date = ?  WHERE id = ?";
@@ -147,6 +144,7 @@ public class ConflictEditController implements AlertScreen {
                         stmt2.executeUpdate();
                         conflictUsersId++;
                     }
+                    BinaryFile.recordChangeConflict(oldConflict, newConflictChange);
                     AlertScreen.info(success.getPrintThing());
 
                 } catch (SQLException | IOException e) {
@@ -213,6 +211,7 @@ public class ConflictEditController implements AlertScreen {
                AlertScreen.error(AppConstants.errorGlobal);
                throw new RuntimeException(e);
            }
+           BinaryFile.recordDelete(conflictId, AppConstants.conflictTable);
            AlertScreen.info(success.getPrintThing());
        }
     }

@@ -3,6 +3,8 @@ module com.example.projektjava {
     requires javafx.fxml;
     requires java.sql;
     requires org.slf4j;
+    requires java.desktop;
+    requires java.compiler;
 
 
     opens com.example.projektjava to javafx.fxml;

@@ -83,7 +83,6 @@ public class ProfileAboutController implements AlertScreen {
                 stmt.setString(6, String.valueOf(id));
 
                 stmt.executeUpdate();
-
                 AlertScreen.showAlert(Alert.AlertType.INFORMATION, success.getPrintThing() );
                 FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("welcome-view.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
