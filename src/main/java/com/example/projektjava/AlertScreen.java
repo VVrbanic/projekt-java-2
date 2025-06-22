@@ -1,6 +1,6 @@
 package com.example.projektjava;
 
-import com.example.projektjava.controller.*;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
@@ -26,11 +26,18 @@ public interface AlertScreen {
     }
 
     static void info(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("INFO");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+        System.out.println("Usaos am u info");
+        Platform.runLater( () -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("INFO");
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            System.out.println("Prikazujem");
+            alert.showAndWait();
+            System.out.println("Proslo");
+
+        });
+
     }
 
     static void error(String message) {

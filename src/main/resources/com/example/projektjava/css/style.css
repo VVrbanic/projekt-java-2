@@ -1,0 +1,66 @@
+.root{
+    -fx-background-color: #C0EEF2;
+    -fx-text-fill: #181823;
+}
+
+.label{
+    -fx-text-fill: #181823;
+}
+
+.text{
+    -fx-text-fill: #181823;
+}
+.button:hover{
+    -fx-border-color: #181823;
+    -fx-background-color: #181823;
+    -fx-text-fill: white;
+}
+
+.button{
+    -fx-background-color: #E9F8F9;
+    -fx-border-color: #E9F8F9;
+    -fx-text-fill: #181823;
+}
+
+.text-field{
+    -fx-background-color: #E9F8F9;
+    -fx-text-fill: #181823;
+}
+.choice-box{
+    -fx-background-color: #E9F8F9;
+    -fx-border-color: #E9F8F9;
+    -fx-text-fill: #181823;
+}
+.radio-button{
+    -fx-text-fill: #181823;
+}
+.table-view{
+    -fx-border-color: transparent;
+}
+.table-view:focused{
+    -fx-border-color: transparent;
+}
+
+.table-row-cell:odd{
+    -fx-background-color: #C0EEF2;
+    -fx-text-fill: #181823;
+}
+
+.table-row-cell:even{
+    -fx-background-color: #E9F8F9;
+    -fx-text-fill: #181823;
+}
+.table-row-cell:selected {
+    -fx-background-color: white;
+}
+.table-row-cell:selected .text{
+    -fx-fill: #181823;
+}
+.menu-item{
+    -fx-background-color: #E9F8F9;
+}
+
+.menu-item:hover{
+    -fx-background-color: #C0EEF2;
+}
+

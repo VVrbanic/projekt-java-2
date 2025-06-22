@@ -9,8 +9,8 @@
     <Menu mnemonicParsing="false" text="Confilct">
       <items>
         <MenuItem mnemonicParsing="false" onAction="#newConflict" text="New " />
-            <MenuItem mnemonicParsing="false" onAction="#searchConflict" text="Search" />
-            <MenuItem mnemonicParsing="false" onAction="#editConflict" text="Edit" />
+            <MenuItem fx:id="conflictSearch" mnemonicParsing="false" onAction="#searchConflict" text="Search" />
+            <MenuItem fx:id="conflictEdit" mnemonicParsing="false" onAction="#editConflict" text="Edit" />
       </items>
     </Menu>
     <Menu mnemonicParsing="false" text="Profil">
@@ -19,14 +19,14 @@
             <MenuItem mnemonicParsing="false" onAction="#signOut" text="SignOut" />
       </items>
     </Menu>
-    <Menu mnemonicParsing="false" text="Users">
+    <Menu fx:id="users" mnemonicParsing="false" text="Users">
       <items>
             <MenuItem mnemonicParsing="false" onAction="#newUser" text="New" />
         <MenuItem mnemonicParsing="false" onAction="#editUser" text="Edit" />
             <MenuItem mnemonicParsing="false" onAction="#searchUser" text="Search" />
       </items>
     </Menu>
-      <Menu mnemonicParsing="false" text="Logs">
+      <Menu fx:id="logs" mnemonicParsing="false" text="Logs">
          <items>
             <MenuItem mnemonicParsing="false" onAction="#seeLogs" text="See logs" />
          </items>

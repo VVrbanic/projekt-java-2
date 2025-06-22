@@ -43,7 +43,7 @@ public class NewConflictConroller implements AlertScreen {
 
     private Printer<String> noUserSelected = new Printer<>("Nije ozačen niti jedan korisnik");
     private Printer<String> reportConformation = new Printer<>("Are you sure you want to report this?");
-    private Printer<String> success = new Printer<>("Korisnik uspješno stvoren");
+    private Printer<String> success = new Printer<>("Konflikt uspješno stvoren!");
 
 
     public void initialize() {

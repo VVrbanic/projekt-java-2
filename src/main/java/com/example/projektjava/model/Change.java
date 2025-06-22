@@ -3,7 +3,7 @@ package com.example.projektjava.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class ChangeDTO implements Serializable {
+public class Change implements Serializable {
     private String oldValue;
     private String newValue;
     private String table;
@@ -11,7 +11,7 @@ public class ChangeDTO implements Serializable {
     private LocalDateTime dateTime;
     private String changeType;
 
-    public ChangeDTO(String oldValue, String newValue, String table, Long userId, LocalDateTime dateTime, String changeType) {
+    public Change(String oldValue, String newValue, String table, Long userId, LocalDateTime dateTime, String changeType) {
         this.oldValue = oldValue;
         this.newValue = newValue;
         this.table = table;
@@ -58,8 +58,8 @@ public class ChangeDTO implements Serializable {
             return this;
         }
 
-        public ChangeDTO build() {
-            return new ChangeDTO(oldValue, newValue, table, userId, dateTime, changeType);
+        public Change build() {
+            return new Change(oldValue, newValue, table, userId, dateTime, changeType);
         }
     }
 

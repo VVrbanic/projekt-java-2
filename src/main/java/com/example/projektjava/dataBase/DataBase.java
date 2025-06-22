@@ -216,6 +216,31 @@ public final class DataBase {
         return mapper.mapDTOToForm(conflictsDTO);
     }
 
+    public static List<ConflictForm> getAllConflictsUnresolved() {
+        List<ConflictDTO> conflictsDTO = new ArrayList<>();
+        String query = "SELECT * FROM conflicts WHERE status_id IN (1, 2)";
+
+        try (Connection conn = connection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                conflictsDTO.add(new ConflictDTO.Builder()
+                        .id(rs.getLong("id"))
+                        .reporterId(rs.getLong("reporter_id"))
+                        .description(rs.getString("description"))
+                        .statusId(rs.getLong("status_id"))
+                        .date(rs.getDate("date") != null ? rs.getDate("date").toLocalDate() : null)
+                        .build());
+            }
+
+        } catch (IOException | SQLException ex) {
+            throw new DatabaseException("Error fetching conflicts.", ex);
+        }
+
+        return mapper.mapDTOToForm(conflictsDTO);
+    }
+
     public static String hashPassword(String password) {
         return Integer.toString(password.hashCode());
     }
@@ -231,13 +256,14 @@ public final class DataBase {
                 .setPassword(rs.getString("password"))
                 .build();
     }
-    //USER CONFLICT
+
     public static Long getNextConflictUsersId(){
         return getAllConflictUsers().stream()
                 .mapToLong(conflictUser -> conflictUser.getId())
                 .max()
                 .orElse(0L) + 1;
     }
+
     private static List<ConflictUsers> getAllConflictUsers(){
         List<ConflictUsers> conflictUsers = new ArrayList<>();
         String query = "SELECT * FROM conflict_users";

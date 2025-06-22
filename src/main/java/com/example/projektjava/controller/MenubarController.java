@@ -7,10 +7,33 @@ import com.example.projektjava.UserSession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 
 import java.io.IOException;
 
 public class MenubarController{
+    @FXML
+    Menu logs;
+    @FXML
+    Menu users;
+    @FXML
+    MenuItem conflictEdit;
+    @FXML
+    MenuItem conflictSearch;
+
+
+    public void initialize(){
+        UserSession session = UserSession.getInstance();
+        if(!session.getUser().isAdmin()){
+            logs.setVisible(false);
+            users.setVisible(false);
+            conflictEdit.setVisible(false);
+            conflictSearch.setVisible(false);
+        }
+    }
+
+
     @FXML
     protected void gotToProfileAbout() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("profile-about.fxml"));

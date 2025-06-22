@@ -33,12 +33,13 @@ public class LoginController implements AlertScreen {
     @FXML
     public Button goBack;
 
-    Printer<String> loginSuccess =new Printer("Login Successful");
-    Printer<String> noMatch =new Printer("User matched incorrectly");
-    Printer<String> faild =new Printer("Login Failed");
-    Printer<String> wrongMailOrPass =new Printer("Krivi mail ili lozinka");
+    Printer<String> loginSuccess = new Printer("Login Successful");
+    Printer<String> noMatch = new Printer("User matched incorrectly");
+    Printer<String> faild = new Printer("Login Failed");
+    Printer<String> wrongMailOrPass = new Printer("Krivi mail ili lozinka");
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+
     @FXML
     protected void logInButtonClicked() throws IOException, ErrorWhileReadingFileException {
         List<String> messages = isFull();
