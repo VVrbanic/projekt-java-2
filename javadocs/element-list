@@ -1,0 +1,9 @@
+module:com.example.projektjava
+com.example.projektjava
+com.example.projektjava.controller
+com.example.projektjava.dataBase
+com.example.projektjava.enums
+com.example.projektjava.exceptions
+com.example.projektjava.mapper
+com.example.projektjava.model
+com.example.projektjava.thread

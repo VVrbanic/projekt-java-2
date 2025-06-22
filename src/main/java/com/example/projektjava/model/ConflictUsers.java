@@ -1,22 +1,13 @@
 package com.example.projektjava.model;
 
-public class ConflictUsers {
-    private Long id;
+public class ConflictUsers extends Id {
     private Long conflictId;
     private Long userId;
 
     private ConflictUsers(Builder builder) {
-        this.id = builder.id;
+        super(builder.id);
         this.conflictId = builder.conflictId;
         this.userId = builder.userId;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Long getConflictId() {
@@ -34,7 +25,7 @@ public class ConflictUsers {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
-    
+
     public static class Builder {
         private Long id;
         private Long conflictId;
@@ -60,4 +51,3 @@ public class ConflictUsers {
         }
     }
 }
-
