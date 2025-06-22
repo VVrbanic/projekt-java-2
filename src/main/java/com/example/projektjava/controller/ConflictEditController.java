@@ -60,6 +60,9 @@ public class ConflictEditController implements AlertScreen {
     private static final Logger log = LoggerFactory.getLogger(ConflictEditController.class);
     private Printer<String> reportConformation = new Printer("Jeste li sigurni da želite izmjeniti konfilkt?");
     private Printer<String> noUserSelected = new Printer("Nije ozačen niti jedan korisnik");
+    private Printer<String> deleteConformation = new Printer("Jeste li sigurni da zelite obrisati konflikt?");
+    private Printer<String> success = new Printer("Uspješno!");
+
 
     public void initialize() {
         date.setValue(LocalDate.now());
@@ -144,8 +147,10 @@ public class ConflictEditController implements AlertScreen {
                         stmt2.executeUpdate();
                         conflictUsersId++;
                     }
+                    AlertScreen.info(success.getPrintThing());
 
                 } catch (SQLException | IOException e) {
+                    AlertScreen.error(AppConstants.errorGlobal);
                     throw new RuntimeException(e);
                 }
             }
@@ -189,13 +194,14 @@ public class ConflictEditController implements AlertScreen {
 
     @FXML
     protected void delete(){
-       if(AlertScreen.conformation("Jeste li sigurni da zelite obrisati konflikt?")) {
+       if(AlertScreen.conformation(deleteConformation.getPrintThing())) {
            try (Connection con = DataBase.connection()) {
                String sql = "DELETE FROM conflicts WHERE id = ?";
                PreparedStatement stmt = con.prepareStatement(sql);
                stmt.setLong(1, conflictId);
                stmt.executeUpdate();
            } catch (SQLException | IOException e) {
+               AlertScreen.error(AppConstants.errorGlobal);
                throw new RuntimeException(e);
            }
            try (Connection con = DataBase.connection()) {
@@ -204,9 +210,11 @@ public class ConflictEditController implements AlertScreen {
                stmt2.setLong(1, conflictId);
                stmt2.executeUpdate();
            } catch (SQLException | IOException e) {
+               AlertScreen.error(AppConstants.errorGlobal);
                throw new RuntimeException(e);
            }
+           AlertScreen.info(success.getPrintThing());
        }
-
     }
+
 }

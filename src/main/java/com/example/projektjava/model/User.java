@@ -137,4 +137,9 @@ public class User {
                 '}';
     }
 
+    public String getFullNameAndId(){
+        return this.firstName + " " + this.lastName + " (" + this.id + ") ";
+
+    }
+
 }

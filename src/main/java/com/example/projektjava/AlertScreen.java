@@ -25,6 +25,22 @@ public interface AlertScreen {
         alert.showAndWait();
     }
 
+    static void info(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("INFO");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    static void error(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("GREŠKA");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
     static void passwordsDontMatch() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("ERROR!");
@@ -47,11 +63,6 @@ public interface AlertScreen {
         alert.setHeaderText(null);
         alert.setContentText("Uspješno kreirano!");
         alert.showAndWait();
-    }
-    default void error(String m){
-        var alert = new Alert(Alert.AlertType.ERROR, m);
-        alert.setTitle("Greška pri unosu!");
-        alert.show();
     }
 
     static boolean conformation(String message) {

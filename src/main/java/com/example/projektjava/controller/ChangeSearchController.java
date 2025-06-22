@@ -25,6 +25,9 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class ChangeSearchController implements AlertScreen {
     @FXML
@@ -60,6 +63,7 @@ public class ChangeSearchController implements AlertScreen {
     UserSession session = UserSession.getInstance();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private static final Logger logger = LoggerFactory.getLogger(ChangeSearchController.class);
+    Pattern pattern = Pattern.compile("\\((\\d+)\\)");
 
     public void initialize() {
         changeTableView.setItems(FXCollections.observableList(BinaryFile.getAllChanges()));
@@ -74,10 +78,27 @@ public class ChangeSearchController implements AlertScreen {
                 });
         changeTypeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getChangeType()));
         changeType.getItems().addAll(ChangeTypeEnum.values());
+
     }
 
     @FXML
     protected void search() {
+        List<ChangeDTO> changes = BinaryFile.getAllChanges();
+
+        List<ChangeDTO> filteredChanges = changes.stream()
+                .filter(change ->
+                        (oldValue.getText().isEmpty() || (change.getOldValue() != null && change.getOldValue().contains(oldValue.getText()))) &&
+                        (newValue.getText().isEmpty() || (change.getNewValue() != null && change.getNewValue().contains(newValue.getText()))) &&
+                        (table.getText().isEmpty() || (change.getTable() != null && change.getTable().contains(table.getText()))) &&
+                        (user.getText().isEmpty() || (change.getUserId() != null && DataBase.getUserById(change.getUserId()).get().getFullNameAndId().contains(user.getText()))) &&
+                        (date == null || (change.getDateTime() != null && change.getDateTime().toLocalDate().equals(date))) &&
+                        (changeType == null || (change.getChangeType() != null && change.getChangeType().equals(changeType.getValue().getName())))
+
+                )
+                .collect(Collectors.toList());
+
+        changeTableView.setItems(FXCollections.observableList(filteredChanges));
     }
+
 
 }

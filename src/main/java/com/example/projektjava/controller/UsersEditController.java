@@ -2,22 +2,19 @@ package com.example.projektjava.controller;
 
 import com.example.projektjava.AlertScreen;
 import com.example.projektjava.AppConstants;
-import com.example.projektjava.HelloApplication;
 import com.example.projektjava.UserSession;
 import com.example.projektjava.dataBase.DataBase;
 import com.example.projektjava.exceptions.DatabaseException;
 import com.example.projektjava.exceptions.DeleteException;
 import com.example.projektjava.exceptions.NoConnectionToDatabaseException;
+import com.example.projektjava.model.Printer;
 import com.example.projektjava.model.User;
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,6 +62,8 @@ public class UsersEditController implements AlertScreen {
 
     UserSession session = UserSession.getInstance();
     private static final Logger logger = LoggerFactory.getLogger(NoConnectionToDatabaseException.class);
+    private Printer<String> editSuccess = new Printer<>("User updated successfully.");
+
     public void initialize() {
         ToggleGroup role = new ToggleGroup();
         roleUser.setToggleGroup(role);
@@ -104,7 +103,7 @@ public class UsersEditController implements AlertScreen {
     @FXML
     protected void save() {
         List<String> messages = isFull();
-        if (messages.isEmpty()) {
+        if (messages.isEmpty() && AlertScreen.conformation("Jeste li sigurni da želite izmjeniti?")) {
             String first = firstName.getText();
             String last = lastName.getText();
             String user = userName.getText();
@@ -123,6 +122,7 @@ public class UsersEditController implements AlertScreen {
                 stmt.setLong(6, id);
                 int rowsUpdated = stmt.executeUpdate();
                 if (rowsUpdated > 0) {
+                    AlertScreen.info(editSuccess.getPrintThing());
                     logger.info("User updated successfully.");
                     clearAll();
                     ObservableList<User> updatedList = FXCollections.observableArrayList(DataBase.getAllUsers());

@@ -5,6 +5,7 @@ import com.example.projektjava.dataBase.DataBase;
 import com.example.projektjava.exceptions.DatabaseException;
 import com.example.projektjava.model.Printer;
 import com.example.projektjava.model.User;
+import com.example.projektjava.model.UserInfo;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -17,6 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class SignUpController implements AlertScreen {
     @FXML
@@ -45,6 +47,7 @@ public class SignUpController implements AlertScreen {
     UserSession session = UserSession.getInstance();
     Printer<String> success = new Printer<>( "User registered successfully, please log in!");
     Printer<String> successShort = new Printer<>( "User registered successfully");
+    Printer<String> emailExists = new Printer<>( "Email već postoji u bazi");
 
     public void initialize() {
         ToggleGroup role = new ToggleGroup();
@@ -76,6 +79,11 @@ public class SignUpController implements AlertScreen {
 
             if (!pass.equals(confirm)) {
                 AlertScreen.passwordsDontMatch();
+                return;
+            }
+            if(checkMail(email.getText())){
+                AlertScreen.error(emailExists.getPrintThing());
+                return;
             }
 
             try (Connection conn = DataBase.connection()) {
@@ -150,6 +158,14 @@ public class SignUpController implements AlertScreen {
         roleUser.setSelected(false);
         roleAdmin.setSelected(false);
 
+    }
+
+    private boolean checkMail(String email){
+        Optional<User> user = DataBase.getUserByEmail(email);
+        if(user.isPresent()){
+            return true;
+        }
+        return false;
     }
     @FXML
     protected void gotToWelcomePagePageButtonClicked() throws IOException {

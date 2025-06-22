@@ -2,9 +2,11 @@ package com.example.projektjava.controller;
 
 import com.example.projektjava.AlertScreen;
 
+import com.example.projektjava.AppConstants;
 import com.example.projektjava.UserSession;
 import com.example.projektjava.dataBase.DataBase;
 import com.example.projektjava.enums.StatusEnum;
+import com.example.projektjava.exceptions.DatabaseException;
 import com.example.projektjava.model.Printer;
 import com.example.projektjava.model.UserPrint;
 import javafx.collections.FXCollections;
@@ -38,8 +40,9 @@ public class NewConflictConroller implements AlertScreen {
     @FXML
     RadioButton anonymusNo;
 
-    private Printer<String> noUserSelected = new Printer("Nije ozačen niti jedan korisnik");
-    private Printer<String> reportConformation = new Printer("Are you sure you want to report this?");
+    private Printer<String> noUserSelected = new Printer<>("Nije ozačen niti jedan korisnik");
+    private Printer<String> reportConformation = new Printer<>("Are you sure you want to report this?");
+    private Printer<String> success = new Printer<>("Korisnik uspješno stvoren");
 
 
     public void initialize() {
@@ -82,10 +85,9 @@ public class NewConflictConroller implements AlertScreen {
                     stmt.setLong(4, statusLong);
                     stmt.setDate(5, Date.valueOf(dateS));
                     stmt.executeUpdate();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                } catch (SQLException | IOException e) {
+                    AlertScreen.error(AppConstants.errorGlobal);
+                    throw new DatabaseException(e);
                 }
                 try (Connection con = DataBase.connection()) {
                     Long conflictUsersId = DataBase.getNextConflictUsersId();
@@ -98,9 +100,14 @@ public class NewConflictConroller implements AlertScreen {
                         stmt.executeUpdate();
                         conflictUsersId++;
                     }
-
+                }catch (SQLException | IOException e) {
+                    AlertScreen.error(AppConstants.errorGlobal);
+                    throw new DatabaseException(e);
                 }
             }
+            AlertScreen.info(success.getPrintThing());
+            log.info(success.getPrintThing());
+            clearAll();
         }else{
             AlertScreen.mandatoryFieldsNotFilled(messages);
         }
@@ -140,6 +147,14 @@ public class NewConflictConroller implements AlertScreen {
             messages.add("Molim označite želite li da prijava bude anonimna");
         }
         return messages;
+    }
+
+    private void clearAll(){
+        listView.getSelectionModel().clearSelection();
+        date.setValue(null);
+        description.clear();
+        anonymusYes.setSelected(false);
+        anonymusNo.setSelected(false);
     }
 
 }
