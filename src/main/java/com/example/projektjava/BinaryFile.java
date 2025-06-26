@@ -19,35 +19,34 @@ import java.util.stream.Collectors;
 
 public class BinaryFile {
 
-    static UserSession session = UserSession.getInstance();
     private static final Logger logger = LoggerFactory.getLogger(BinaryFile.class);
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     public static void recordAdd(Long id, String table) {
-        Change change = new Change(null, String.valueOf(id), table, session.getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.NEW.getName());
+        Change change = new Change(null, String.valueOf(id), table,UserSession.getInstance().getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.NEW.getName());
         addLog(change);
     }
 
     public static void recordDelete(Long id, String table) {
-        Change change = new Change(String.valueOf(id),null, table, session.getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.DELETE.getName());
+        Change change = new Change(String.valueOf(id),null, table, UserSession.getInstance().getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.DELETE.getName());
         addLog(change);
     }
 
     public static void recordChangeUser(User oldValue, User newValue) {
         if(!Objects.equals(oldValue.getFirstName(), newValue.getFirstName())){
-            addLog(new Change(oldValue.getFirstName(), newValue.getFirstName(), AppConstants.userTable, session.getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.EDIT.getName()));
+            addLog(new Change(oldValue.getFirstName(), newValue.getFirstName(), AppConstants.userTable, UserSession.getInstance().getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.EDIT.getName()));
         }
         if(!Objects.equals(oldValue.getLastName(), newValue.getLastName())){
-            addLog(new Change(oldValue.getLastName(), newValue.getLastName(), AppConstants.userTable, session.getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.EDIT.getName()));
+            addLog(new Change(oldValue.getLastName(), newValue.getLastName(), AppConstants.userTable, UserSession.getInstance().getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.EDIT.getName()));
         }
         if(!Objects.equals(oldValue.getUserName(), newValue.getUserName())){
-            addLog(new Change(oldValue.getUserName(), newValue.getUserName(), AppConstants.userTable, session.getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.EDIT.getName()));
+            addLog(new Change(oldValue.getUserName(), newValue.getUserName(), AppConstants.userTable, UserSession.getInstance().getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.EDIT.getName()));
         }
         if(oldValue.isAdmin() != newValue.isAdmin()){
-            addLog(new Change(String.valueOf(oldValue.isAdmin() ? AppConstants.TRUE : AppConstants.FALSE), String.valueOf(newValue.isAdmin() ? AppConstants.TRUE : AppConstants.FALSE), AppConstants.userTable, session.getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.EDIT.getName()));
+            addLog(new Change(String.valueOf(oldValue.isAdmin() ? AppConstants.TRUE : AppConstants.FALSE), String.valueOf(newValue.isAdmin() ? AppConstants.TRUE : AppConstants.FALSE), AppConstants.userTable, UserSession.getInstance().getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.EDIT.getName()));
         }
         if(!Objects.equals(oldValue.getEmail(), newValue.getEmail())){
-            addLog(new Change(oldValue.getEmail(), newValue.getEmail(), AppConstants.userTable, session.getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.EDIT.getName()));
+            addLog(new Change(oldValue.getEmail(), newValue.getEmail(), AppConstants.userTable, UserSession.getInstance().getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.EDIT.getName()));
         }
     }
 
@@ -57,16 +56,16 @@ public class BinaryFile {
         String oldInvolved = oldValue.getUserInvolved().stream()
                 .collect(Collectors.joining(","));
         if(newInvolved != oldInvolved){
-            addLog(new Change(oldInvolved, newInvolved, AppConstants.conflictTable, session.getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.EDIT.getName()));
+            addLog(new Change(oldInvolved, newInvolved, AppConstants.conflictTable, UserSession.getInstance().getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.EDIT.getName()));
         }
         if(!Objects.equals(oldValue.getDescription(), newValue.getDescription())){
-            addLog(new Change(oldValue.getDescription(), newValue.getDescription(), AppConstants.conflictTable, session.getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.EDIT.getName()));
+            addLog(new Change(oldValue.getDescription(), newValue.getDescription(), AppConstants.conflictTable, UserSession.getInstance().getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.EDIT.getName()));
         }
         if(oldValue.getStatus() != newValue.getStatus()){
-            addLog(new Change(oldValue.getStatus().getName(), newValue.getStatus().getName(), AppConstants.conflictTable, session.getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.EDIT.getName()));
+            addLog(new Change(oldValue.getStatus().getName(), newValue.getStatus().getName(), AppConstants.conflictTable, UserSession.getInstance().getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.EDIT.getName()));
         }
         if(oldValue.getDate() != newValue.getDate()){
-            addLog(new Change(formatter.format(oldValue.getDate()), formatter.format(newValue.getDate()), AppConstants.conflictTable, session.getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.EDIT.getName()));
+            addLog(new Change(formatter.format(oldValue.getDate()), formatter.format(newValue.getDate()), AppConstants.conflictTable, UserSession.getInstance().getUser().getId(), LocalDateTime.now(), ChangeTypeEnum.EDIT.getName()));
         }
     }
 

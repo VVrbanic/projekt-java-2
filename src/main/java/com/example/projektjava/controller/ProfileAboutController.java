@@ -42,8 +42,6 @@ public class ProfileAboutController implements AlertScreen {
 
     private Long id;
 
-    User currentUser = UserSession.getInstance().getUser();
-
     public void setUser(User user) {
         firstName.setText(user.getFirstName());
         lastName.setText(user.getLastName());
@@ -58,7 +56,7 @@ public class ProfileAboutController implements AlertScreen {
         ToggleGroup role = new ToggleGroup();
         roleUser.setToggleGroup(role);
         roleAdmin.setToggleGroup(role);
-        setUser(currentUser);
+        setUser(UserSession.getInstance().getUser());
         setDisabled(true);
     }
 

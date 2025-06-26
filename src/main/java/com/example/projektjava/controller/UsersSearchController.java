@@ -91,7 +91,7 @@ public class UsersSearchController implements AlertScreen {
             stmt.setString(3, "%" + user + "%");
             stmt.setString(4, "%" + mail + "%");
             stmt.setBoolean(5, Objects.equals(role, AppConstants.TRUE));
-            stmt.setLong(5, AppConstants.TRUE);
+            stmt.setLong(6, AppConstants.TRUE);
             stmt.executeQuery();
             ResultSet rs = stmt.executeQuery();
             List<User> matchedUsers = new ArrayList<>();

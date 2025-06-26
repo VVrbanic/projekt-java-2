@@ -213,6 +213,8 @@ public class ConflictEditController implements AlertScreen {
            }
            BinaryFile.recordDelete(conflictId, AppConstants.conflictTable);
            AlertScreen.info(success.getPrintThing());
+           List<ConflictForm> allConflicts = DataBase.getAllConflicts();
+           conflictTableView.setItems(FXCollections.observableList(allConflicts));
        }
     }
 

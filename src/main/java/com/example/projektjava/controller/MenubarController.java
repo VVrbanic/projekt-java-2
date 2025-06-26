@@ -25,7 +25,7 @@ public class MenubarController{
 
     public void initialize(){
         UserSession session = UserSession.getInstance();
-        if(!session.getUser().isAdmin()){
+        if(session != null ? !session.getUser().isAdmin() : false){
             logs.setVisible(false);
             users.setVisible(false);
             conflictEdit.setVisible(false);

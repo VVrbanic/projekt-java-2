@@ -44,6 +44,7 @@ public class SignUpController implements AlertScreen {
     @FXML
     private Node menuBar;
 
+
     UserSession session = UserSession.getInstance();
     Printer<String> success = new Printer<>( "User registered successfully, please log in!");
     Printer<String> successShort = new Printer<>( "User registered successfully");

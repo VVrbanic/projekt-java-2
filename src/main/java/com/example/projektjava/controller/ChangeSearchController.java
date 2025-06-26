@@ -2,7 +2,6 @@ package com.example.projektjava.controller;
 
 import com.example.projektjava.AlertScreen;
 import com.example.projektjava.BinaryFile;
-import com.example.projektjava.UserSession;
 import com.example.projektjava.dataBase.DataBase;
 import com.example.projektjava.enums.ChangeTypeEnum;
 import com.example.projektjava.model.Change;
@@ -11,13 +10,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class ChangeSearchController implements AlertScreen {
@@ -88,6 +84,7 @@ public class ChangeSearchController implements AlertScreen {
                 .collect(Collectors.toList());
 
         changeTableView.setItems(FXCollections.observableList(filteredChanges));
+
     }
 
 
